@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-todo-deployment
+  labels:
+    app: todo-app
+    tier: frontend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: todo-app
+      tier: frontend
+  template:
+    metadata:
+      labels:
+        app: todo-app
+        tier: frontend
+    spec:
+      containers:
+      - name: flask-todo
+        image: pavithra22rajan/todo-app:v1
+        ports:
+        - containerPort: 5000
+        env:
+          - name: MONGO_HOST
+            value: "mongodb-service" 
+          - name: MONGO_PORT
+            value: "27017"
