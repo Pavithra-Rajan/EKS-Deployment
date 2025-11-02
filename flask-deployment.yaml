@@ -32,3 +32,15 @@ spec:
             value: "mongodb-service" 
           - name: MONGO_PORT
             value: "27017"
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 5000
+          initialDelaySeconds: 15
+          timeoutSeconds: 5
+        readinessProbe:
+          httpGet:
+            path: /list
+            port: 5000
+          initialDelaySeconds: 5
+          timeoutSeconds: 3
