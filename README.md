@@ -1,6 +1,26 @@
 # CS-GY-9223-Cloud-Assg2
 This repository contains the codebase for CS-GY 9223 Cloud Computing Assignment 2 dealing with EKS, Docker and deployments.
-
+- [CS-GY-9223-Cloud-Assg2](#cs-gy-9223-cloud-assg2)
+   * [Set Up](#set-up)
+   * [Containerizing the Application on Docker](#containerizing-the-application-on-docker)
+      + [Issues faced](#issues-faced)
+      + [Docker compose commands](#docker-compose-commands)
+      + [Pushing image to DockerHub](#pushing-image-to-dockerhub)
+   * [Deploying the Application on Minikube](#deploying-the-application-on-minikube)
+      + [Service details](#service-details)
+      + [Frontend replica details](#frontend-replica-details)
+      + [Deleting a pod ](#deleting-a-pod)
+   * [Deploying the Application on AWS EKS](#deploying-the-application-on-aws-eks)
+      + [Add-Ons    ](#add-ons)
+      + [Issues with eksconfig](#issues-with-eksconfig)
+      + [Service account creation](#service-account-creation)
+      + [Issues with PVC](#issues-with-pvc)
+   * [Deployments and ReplicaSets](#deployments-and-replicasets)
+   * [Rolling update strategy](#rolling-update-strategy)
+   * [Health monitoring](#health-monitoring)
+      + [Readiness probe](#readiness-probe)
+      + [Liveness probe](#liveness-probe)
+   * [Alerting](#alerting)
 ## Set Up
 - Install Docker [for Ubuntu via apt](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository)
 - Install minikube [via Binary](https://minikube.sigs.k8s.io/docs/start/?arch=%2Flinux%2Fx86-64%2Fstable%2Fbinary+download)
@@ -232,6 +252,7 @@ kubectl apply -f gp2-eks-sc.yaml
 - Added a `sys.exit` in `\list` endpoint and re-applied the changes.
 ![alt text](readme-assets/readiness.png)
 ![alt text](readme-assets/readiness-fail.png)
+### Liveness probe
 - Similarly, did the above for `\` root endpoint. Here, we can see that the pod keeps restarting. 
 ![alt text](readme-assets/liveness.png)
 ## Alerting
