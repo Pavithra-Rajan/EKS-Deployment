@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
       - name: flask-todo
-        image: pavithra22rajan/todo-app:v2
+        image: pavithra22rajan/todo-app:v10
         ports:
         - containerPort: 5000
         env:
