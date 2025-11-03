@@ -244,16 +244,15 @@ kubectl apply -f gp2-eks-sc.yaml
 ![alt text](readme-assets/v2-build.png)
 - Make changes to `flask-deployment.yaml` to have the right tag.
 - The status can be monitored with `kubectl. 
-![alt text](readme-assets/v2-change.png)
 ![alt text](readme-assets/v2-rollout.png)
 ## Health monitoring
 - Added liveness and readiness probe to `flask-deployment.yaml`. 
 ### Readiness probe
-- Added a `sys.exit` in `\list` endpoint and re-applied the changes.
+- Added a `sys.exit` in `/list` endpoint and re-applied the changes.
 ![alt text](readme-assets/readiness.png)
 ![alt text](readme-assets/readiness-fail.png)
 ### Liveness probe
-- Similarly, did the above for `\` root endpoint. Here, we can see that the pod keeps restarting. 
+- Similarly, did the above for `/` root endpoint. Here, we can see that the pod keeps restarting. 
 ![alt text](readme-assets/liveness.png)
 ## Alerting
 ```
