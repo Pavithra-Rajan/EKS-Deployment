@@ -1,0 +1,40 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: flask-health-alert
+  labels:
+    prometheus: kube-prometheus-stack
+    role: alert-rules
+  namespace: monitoring
+spec:
+  groups:
+  - name: application-alerts
+    rules:
+    # Fires when any Pod is marked Unready (0/1 READY) for 1 minute (usually Readiness Probe failure).
+    - alert: FlaskPodUnready
+      expr: kube_deployment_status_replicas_unavailable{deployment="flask-todo-deployment", namespace="default"} > 0
+      for: 1m
+      labels:
+        severity: critical
+      annotations:
+        summary: "Flask To-Do App Replica is Unhealthy"
+        description: "Deployment {{ $labels.deployment }} has unavailable replicas due to sustained probe failures."
+        
+    # Fires if the container restarts in the last 15 minutes.
+    - alert: FlaskPodRestarting
+      expr: increase(kube_pod_container_status_restarts_total{namespace="default", container="flask-todo"}[15m]) > 0
+      for: 0s
+      labels:
+        severity: warning
+      annotations:
+        summary: "Flask Pod is Frequently Restarting"
+        description: "Pod {{ $labels.pod }} in Deployment {{ $labels.deployment }} has restarted more than 3 times in the last hour, indicating a persistent Liveness Probe failure."
+
+    - alert: FlaskPodDeleted
+      expr: kube_deployment_status_replicas_available{deployment="flask-todo-deployment", namespace="default"} < kube_deployment_spec_replicas{deployment="flask-todo-deployment", namespace="default"}
+      for: 0s
+      labels:
+        severity: info
+      annotations:
+        summary: "Flask Pod Deletion Detected"
+        description: "A Pod was deleted from Deployment {{ $labels.deployment }}. Kubernetes is initiating self-healing."
