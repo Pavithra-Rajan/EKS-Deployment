@@ -30,8 +30,6 @@ def redirect_url():
 
 @app.route("/list")
 def lists():   
-	import sys
-    sys.exit(1)
     # These lines will never execute
     todos_l = todos.find()
     a1 = "active"
